@@ -3,6 +3,7 @@ import useTaskStore from '../store/taskStore'
 import ProgressBar from '../compnents/ui/ProgressBar';
 import FilterBar from "../compnents/FilterBar/FilterBar";
 import TaskList from "../compnents/TaskList/TaskList";
+import AddTaskForm from "../compnents/AddTaskForm/AddTaskForm";
 
 const FILTERS = ['ALL', 'ACTIVE', 'DONE', 'WORK', 'HEALTH', 'PERSONAL']
 
@@ -13,13 +14,14 @@ const AllTasks = () => {
     const doneTasks = tasks.filter(t => t.done)
     const activeTasks = tasks.filter(t => !t.done)
 
-    const visibleTasks = (() => {
-        if (filter === 'active') return activeTasks
-        if (filter === 'done') return doneTasks
-        if (['Work', 'Health', 'Personal'].includes(filter))
+    function getVisibleTasks() {
+        if (filter === 'ACTIVE') return activeTasks
+        if (filter === 'DONE') return doneTasks
+        if (['WORK', 'HEALTH', 'PERSONAL'].includes(filter))
             return tasks.filter(t => t.label === filter)
         return tasks
-    })
+    }
+    const visibleTasks = getVisibleTasks()
 
     return (
         <section>
@@ -45,6 +47,8 @@ const AllTasks = () => {
                     <span className="text-[1.5rem]">2</span>
                 </div>
             </div>
+
+            <AddTaskForm />
 
             <ProgressBar total={tasks.length} done={doneTasks.length} />
 

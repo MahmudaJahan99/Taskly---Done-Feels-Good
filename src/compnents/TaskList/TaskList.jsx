@@ -1,4 +1,3 @@
-// src/components/TaskList/TaskList.jsx
 import TaskItem from '../TaskItem/TaskItem'
 
 export default function TaskList({ tasks }) {

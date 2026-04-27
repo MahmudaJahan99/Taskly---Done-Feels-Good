@@ -12,7 +12,7 @@ const useTaskStore = create(
         { id: '4', title: 'Set up Vite + React', label: 'Work', done: true, createdAt: new Date().toISOString() },
         { id: '5', title: 'Read 20 pages', label: 'Personal', done: true, createdAt: new Date().toISOString() },
       ],
-      filter: 'all',
+      filter: 'ALL',
       setFilter: (filter) => set({ filter }),
       toggleDone: (id) => set((state) => ({
         tasks: state.tasks.map(t => t.id === id ? { ...t, done: !t.done } : t)

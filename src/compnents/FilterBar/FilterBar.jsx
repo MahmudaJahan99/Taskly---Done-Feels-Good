@@ -1,4 +1,3 @@
-// src/components/ui/FilterBar.jsx
 import useTaskStore from '../../store/taskStore'
 
 const FILTERS = ['ALL', 'ACTIVE', 'DONE', 'WORK', 'HEALTH', 'PERSONAL']

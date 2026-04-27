@@ -3,9 +3,9 @@ import Sidebar from '../Sidebar/Sidebar.jsx'
 
 export default function RootLayout() {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--color-bg)' }}>
+    <div className='flex min-h-screen bg-(--color-bg)'>
       <Sidebar />
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <main className='flex-1 flex flex-col'>
         <Outlet />
       </main>
     </div>
