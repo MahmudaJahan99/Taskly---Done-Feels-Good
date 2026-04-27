@@ -1,11 +1,15 @@
 import { Link, NavLink } from 'react-router-dom'
+import './Sidebar.css'
 import icon from '/taskly-favicon.svg'
+import { IoCheckboxOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
+import { MdAccessTime } from "react-icons/md";
+import { CiCalendar } from "react-icons/ci";
 
 const navItems = [
-  { to: '/', label: 'All tasks', count: 0 },
-  { to: '/today', label: 'Today', count: 0 },
-  { to: '/upcoming', label: 'Upcoming', count: 0 },
-  { to: '/done', label: 'Completed' },
+  { to: '/', icon: <IoCheckboxOutline />, label: 'All tasks', count: 0 },
+  { to: '/today', icon: <MdAccessTime />, label: 'Today', count: 0 },
+  { to: '/upcoming', icon: <CiCalendar />, label: 'Upcoming', count: 0 },
+  { to: '/done', icon: <IoCheckmarkCircleOutline />, label: 'Completed' },
 ]
 
 const labels = [
@@ -35,7 +39,10 @@ export default function Sidebar() {
             `sidebar-navlink ${isActive ? 'active' : ''}`
           }
         >
-          {item.label}
+          <span className='flex items-center gap-1'>
+            {item.icon}
+            {item.label}
+          </span>
           {item.count ? (
             <span className="nav-count">
               {item.count}
@@ -45,7 +52,7 @@ export default function Sidebar() {
       ))}
 
       {/* Labels section */}
-      <p className='uppercase tracking-[0.08em] mt-4 mb-1.5 ml-2.5' style={{ color: 'var(--color-muted)' }}>Labels</p>
+      <p className='uppercase tracking-[0.08em] mt-4 mb-1.5 ml-2.5 text-(--color-muted)'>Labels</p>
       {labels.map(label => (
         <button key={label.name} className='flex items-center gap-2.5 p-2 rounded-lg cursor-pointer'>
           <div className='w-2 h-2 rounded-full' style={{ background: label.color }} />
