@@ -1,9 +1,10 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import icon from '/taskly-favicon.svg'
 
 const navItems = [
-  { to: '/', label: 'All tasks', count: 5 },
-  { to: '/today', label: 'Today', count: 3 },
-  { to: '/upcoming', label: 'Upcoming', count: 2 },
+  { to: '/', label: 'All tasks', count: 0 },
+  { to: '/today', label: 'Today', count: 0 },
+  { to: '/upcoming', label: 'Upcoming', count: 0 },
   { to: '/done', label: 'Completed' },
 ]
 
@@ -15,49 +16,39 @@ const labels = [
 
 export default function Sidebar() {
   return (
-    <aside style={{
-      width: '200px', background: 'var(--color-surface)',
-      borderRight: '0.5px solid var(--color-border)',
-      padding: '20px 16px', display: 'flex',
-      flexDirection: 'column', gap: '4px'
-    }}>
-
+    <aside className='w-50 flex flex-col gap-1'>
       {/* Logo */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
-        <div style={{ width: 32, height: 32, background: 'var(--color-primary)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {/* inline svg logo mark */}
+      <Link to={"/"} href='#' className='flex items-center gap-2.5 mb-4.5'>
+        <div className='w-8 h-8 flex items-center justify-center'>
+          <img src={icon} alt="Taskly Logo" />
         </div>
-        <span style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--color-text)' }}>Taskly</span>
-      </div>
+        <span className='logo'>Taskly</span>
+      </Link>
 
       {/* Nav links */}
       {navItems.map(item => (
         <NavLink
           key={item.to}
           to={item.to}
-          end={item.to === '/'}   /* 'end' prevents '/' matching all routes */
-          style={({ isActive }) => ({
-            display: 'flex', alignItems: 'center', gap: 9,
-            padding: '8px 10px', borderRadius: 8, fontSize: 13,
-            textDecoration: 'none',
-            background: isActive ? 'var(--color-primary)' : 'transparent',
-            color: isActive ? '#fff' : 'var(--color-muted)',
-          })}
+          end={item.to === '/'}
+          className={({ isActive }) =>
+            `sidebar-navlink ${isActive ? 'active' : ''}`
+          }
         >
           {item.label}
-          {item.count && (
-            <span style={{ marginLeft: 'auto', fontSize: 11, background: 'rgba(0,0,0,0.1)', borderRadius: 10, padding: '1px 7px' }}>
+          {item.count ? (
+            <span className="nav-count">
               {item.count}
             </span>
-          )}
+          ) : ""}
         </NavLink>
       ))}
 
       {/* Labels section */}
-      <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-muted)', margin: '16px 0 6px 10px' }}>Labels</p>
+      <p className='uppercase tracking-[0.08em] mt-4 mb-1.5 ml-2.5' style={{ color: 'var(--color-muted)' }}>Labels</p>
       {labels.map(label => (
-        <button key={label.name} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 8, fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)' }}>
-          <div style={{ width: 8, height: 8, borderRadius: '50%', background: label.color }} />
+        <button key={label.name} className='flex items-center gap-2.5 p-2 rounded-lg cursor-pointer'>
+          <div className='w-2 h-2 rounded-full' style={{ background: label.color }} />
           {label.name}
         </button>
       ))}
