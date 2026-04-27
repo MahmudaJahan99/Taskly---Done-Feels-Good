@@ -42,12 +42,10 @@ export default function AddTaskForm() {
         <option>Personal</option>
       </select>
 
-      <button
-        type="submit"
-        className="px-3 py-2 rounded-lg text-white bg-primary"
-      >
-        Add
-      </button>
+        <button className="primary-btn flex items-center gap-2">
+                    <span>+</span>
+                    <span>Add task</span>
+                </button>
     </form>
   );
 }

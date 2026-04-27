@@ -25,12 +25,9 @@ const AllTasks = () => {
 
     return (
         <section>
-            <div className="flex justify-between items-center border-b pb-4 border-(--color-muted)">
+            <div className="border-b pb-4 border-(--color-border)">
                 <h1>All Tasks</h1>
-                <button className="primary-btn flex items-center gap-2">
-                    <span>+</span>
-                    <span>Add task</span>
-                </button>
+              
             </div>
 
             <div className="grid md:grid-cols-3 gap-2 my-2">
