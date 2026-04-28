@@ -5,7 +5,7 @@ export default function TaskItem({ task }) {
   const deleteTask = useTaskStore((s) => s.deleteTask)
 
   return (
-    <li className="flex items-center gap-3 p-3 rounded-xl border border-(--color-surface) bg-white">
+    <li className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-white">
       <input
         type="checkbox"
         checked={task.done}

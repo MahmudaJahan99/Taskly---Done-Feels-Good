@@ -1,14 +1,12 @@
 import useTaskStore from '../../store/taskStore'
 
-const FILTERS = ['all', 'active', 'done', 'work', 'health', 'personal']
-
-const FilterBar = () => {
+const FilterBar = ({ filters }) => {
   const filter = useTaskStore((s) => s.filter)
   const setFilter = useTaskStore((s) => s.setFilter)
 
   return (
     <div className="flex gap-2 flex-wrap my-4">
-      {FILTERS.map((label) => (
+      {filters.map((label) => (
         <button
           key={label}
           onClick={() => setFilter(label)}

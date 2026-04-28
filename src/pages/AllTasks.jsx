@@ -1,23 +1,22 @@
-import { useState } from "react";
 import useTaskStore from '../store/taskStore'
 import ProgressBar from '../components/ui/ProgressBar';
 import FilterBar from "../components/FilterBar/FilterBar";
 import TaskList from "../components/TaskList/TaskList";
 import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
 
-const FILTERS = ['ALL', 'ACTIVE', 'DONE', 'WORK', 'HEALTH', 'PERSONAL']
+const FILTERS = ['all', 'active', 'done', 'work', 'health', 'personal']
 
 const AllTasks = () => {
     const tasks = useTaskStore((s) => s.tasks)
-    const [filter, setFilter] = useState('all')
+    const filter = useTaskStore((s) => s.filter)
 
-    const doneTasks = tasks.filter(t => t.done)
     const activeTasks = tasks.filter(t => !t.done)
+    const doneTasks = tasks.filter(t => t.done)
 
     function getVisibleTasks() {
-        if (filter === 'ACTIVE') return activeTasks
-        if (filter === 'DONE') return doneTasks
-        if (['WORK', 'HEALTH', 'PERSONAL'].includes(filter))
+        if (filter === 'active') return activeTasks
+        if (filter === 'done') return doneTasks
+        if (['work', 'health', 'personal'].includes(filter))
             return tasks.filter(t => t.label === filter)
         return tasks
     }
@@ -25,32 +24,43 @@ const AllTasks = () => {
 
     return (
         <section>
+            {/* Page title */}
             <div className="border-b pb-4 border-(--color-border)">
                 <h1>All Tasks</h1>
-              
             </div>
 
-            <div className="grid md:grid-cols-3 gap-2 my-2">
+            {/* Tasks Card - Total, Active, & Done */}
+            <div className="grid md:grid-cols-3 gap-2 my-3">
                 <div className="primary-card">
                     <span className="text-(--color-muted) text-sm">Total</span>
-                    <span className="text-[1.5rem]">5</span>
+                    <span className="text-[1.5rem]">
+                        {tasks.length}
+                    </span>
                 </div>
                 <div className="primary-card">
                     <span className="text-(--color-muted) text-sm">Active</span>
-                    <span className="text-[1.5rem]">3</span>
+                    <span className="text-[1.5rem]">
+                        {activeTasks.length}
+                    </span>
                 </div>
                 <div className="primary-card">
                     <span className="text-(--color-muted) text-sm">Done</span>
-                    <span className="text-[1.5rem]">2</span>
+                    <span className="text-[1.5rem]">
+                        {doneTasks.length}
+                    </span>
                 </div>
             </div>
 
+            {/* Add Tasks Form */}
             <AddTaskForm />
 
+            {/* Progress Bar */}
             <ProgressBar total={tasks.length} done={doneTasks.length} />
 
-            <FilterBar filters={FILTERS} activeTasks={filter} onFilterChange={setFilter} />
+            {/* Filter Buttons */}
+            <FilterBar filters={FILTERS} />
 
+            {/* Tasks */}
             <TaskList tasks={visibleTasks} />
         </section>
     );

@@ -10,7 +10,7 @@ export default function TaskList({ tasks }) {
   }
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-3">
       {tasks.map(task => (
         <TaskItem key={task.id} task={task} />
       ))}
