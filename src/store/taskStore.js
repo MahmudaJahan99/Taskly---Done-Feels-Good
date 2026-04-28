@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 
 const useTaskStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       tasks: [],
       filter: "all",
       setFilter: (filter) => set({ filter }),
@@ -18,7 +18,10 @@ const useTaskStore = create(
       deleteTask: (id) =>
         set((state) => ({ tasks: state.tasks.filter((t) => t.id !== id) })),
     }),
-    { name: "taskly-storage" }, // auto-persists to localStorage!
+    {
+      name: "taskly-storage",
+      partialize: (state) => ({ tasks: state.tasks }),
+    },
   ),
 );
 

@@ -21,10 +21,10 @@ export default function TaskItem({ task }) {
       >
         {task.title}
       </span>
-      <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: '#F5E6D3', color: '#6B4C36' }}>
+      <span className="text-xs px-2 py-0.5 rounded-full capitalize bg-(--color-surface) text(--color-text)">
         {task.label}
       </span>
-      <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer" style={{ color: '#C0634D' }}>
+      <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text(--color-text)">
         Delete
       </button>
     </li>

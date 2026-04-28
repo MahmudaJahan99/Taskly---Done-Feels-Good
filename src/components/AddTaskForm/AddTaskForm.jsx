@@ -15,7 +15,7 @@ export default function AddTaskForm() {
     addTask({
       id: Date.now().toString(),
       title,
-      label,
+      label: label.toLowerCase().trim(),
       done: false,
       createdAt: new Date().toISOString(),
     });
@@ -36,9 +36,9 @@ export default function AddTaskForm() {
         value={label}
         onChange={(e) => setLabel(e.target.value)}
       >
-        <option className="capitalize">work</option>
-        <option className="capitalize">health</option>
-        <option className="capitalize">personal</option>
+        <option className="capitalize">Work</option>
+        <option className="capitalize">Health</option>
+        <option className="capitalize">Personal</option>
       </select>
 
       <button className="primary-btn flex items-center gap-2">
