@@ -1,9 +1,9 @@
 import { useState } from "react";
 import useTaskStore from '../store/taskStore'
-import ProgressBar from '../compnents/ui/ProgressBar';
-import FilterBar from "../compnents/FilterBar/FilterBar";
-import TaskList from "../compnents/TaskList/TaskList";
-import AddTaskForm from "../compnents/AddTaskForm/AddTaskForm";
+import ProgressBar from '../components/ui/ProgressBar';
+import FilterBar from "../components/FilterBar/FilterBar";
+import TaskList from "../components/TaskList/TaskList";
+import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
 
 const FILTERS = ['ALL', 'ACTIVE', 'DONE', 'WORK', 'HEALTH', 'PERSONAL']
 

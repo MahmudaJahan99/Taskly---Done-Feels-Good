@@ -5,7 +5,7 @@ export default function AddTaskForm() {
   const addTask = useTaskStore((s) => s.addTask);
 
   const [title, setTitle] = useState("");
-  const [label, setLabel] = useState("Work");
+  const [label, setLabel] = useState("work");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,23 +29,22 @@ export default function AddTaskForm() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a task..."
-        className="flex-1 border px-3 py-2 rounded-lg text-sm"
+        className="flex-1"
       />
 
       <select
         value={label}
         onChange={(e) => setLabel(e.target.value)}
-        className="border px-2 py-2 rounded-lg text-sm"
       >
-        <option>Work</option>
-        <option>Health</option>
-        <option>Personal</option>
+        <option className="capitalize">work</option>
+        <option className="capitalize">health</option>
+        <option className="capitalize">personal</option>
       </select>
 
-        <button className="primary-btn flex items-center gap-2">
-                    <span>+</span>
-                    <span>Add task</span>
-                </button>
+      <button className="primary-btn flex items-center gap-2">
+        <span>+</span>
+        <span>Add task</span>
+      </button>
     </form>
   );
 }

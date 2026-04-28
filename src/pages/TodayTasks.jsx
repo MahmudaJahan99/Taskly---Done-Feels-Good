@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Completed = () => {
+const TodayTasks = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Completed = () => {
     );
 };
 
-export default Completed;
+export default TodayTasks;

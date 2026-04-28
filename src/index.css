@@ -59,10 +59,12 @@ h1 {
 
 input,
 select {
+    padding: 8px 10px;
     border: 1px solid var(--color-border);
     outline: none;
     border-radius: 8px;
     color: var(--color-text);
+    font-size: 13px;
 }
 
 input:focus,
