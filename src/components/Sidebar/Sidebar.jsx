@@ -5,6 +5,7 @@ import { IoCheckboxOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { MdAccessTime } from "react-icons/md";
 import { CiCalendar } from "react-icons/ci";
 import useTaskStore from '../../store/taskStore';
+import { LABEL_COLORS } from '../../constants/labels';
 
 export default function Sidebar() {
 
@@ -29,11 +30,7 @@ export default function Sidebar() {
     { to: '/done', icon: <IoCheckmarkCircleOutline />, label: 'Completed', count: completedCount },
   ]
 
-  const labels = [
-    { to: '/work', name: 'work', color: '#FAC775' },
-    { to: '/health', name: 'health', color: '#7BAF7B' },
-    { to: '/personal', name: 'personal', color: '#F5C4B3' },
-  ]
+  const labels = LABEL_COLORS;
 
   return (
     <aside className='w-50 flex flex-col gap-1'>
@@ -80,7 +77,7 @@ export default function Sidebar() {
           }
         >
           <span className="w-2.5 h-2.5 rounded-full ml-0.5"
-            style={{ backgroundColor: label.color }}>
+            style={{ backgroundColor: label.bg }}>
           </span>
           <span className='capitalize'>
             {label.name}

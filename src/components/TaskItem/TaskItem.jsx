@@ -1,8 +1,12 @@
+import { LABEL_COLORS } from '../../constants/labels'
 import useTaskStore from '../../store/taskStore'
 
 export default function TaskItem({ task }) {
   const toggleTask = useTaskStore((s) => s.toggleDone)
   const deleteTask = useTaskStore((s) => s.deleteTask)
+
+  const labelColor = LABEL_COLORS.find((l) => l.name === task.label)
+    ?? { bg: '#F3F4F6', text: '#6B7280', border: '#E5E7EB' }
 
   return (
     <li className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-white">
@@ -21,10 +25,21 @@ export default function TaskItem({ task }) {
       >
         {task.title}
       </span>
-      <span className="text-xs px-2 py-0.5 rounded-full capitalize bg-(--color-surface) text(--color-text)">
+      <span
+        className="text-xs px-2 py-0.5 rounded-full capitalize"
+        style={{
+          backgroundColor: labelColor.bg,
+          color: labelColor.text,
+          border: `1px solid ${labelColor.border}`,
+        }}
+      >
         {task.label}
       </span>
-      <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text(--color-text)">
+      <button
+        onClick={() => deleteTask(task.id)}
+        className="text-xs cursor-pointer"
+        style={{ color: '#C0634D' }}
+      >
         Delete
       </button>
     </li>
