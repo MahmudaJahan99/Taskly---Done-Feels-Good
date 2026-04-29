@@ -39,6 +39,8 @@ export default function AddTaskForm() {
         <option className="capitalize">Work</option>
         <option className="capitalize">Health</option>
         <option className="capitalize">Personal</option>
+        <option className="capitalize">Study</option>
+        <option className="capitalize">Other</option>
       </select>
 
       <button className="primary-btn flex items-center gap-2">

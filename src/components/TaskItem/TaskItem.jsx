@@ -14,7 +14,6 @@ export default function TaskItem({ task }) {
       style={{
         '--label-bg': labelColor.bg,
         '--label-text': labelColor.text,
-        '--label-border': labelColor.border,
       }}
     >
       <input
@@ -26,7 +25,7 @@ export default function TaskItem({ task }) {
       <span className={`flex-1 text-sm transition-opacity ${task.done ? 'line-through opacity-50' : 'opacity-100'}`}>
         {task.title}
       </span>
-      <span className="text-xs px-2 py-0.5 rounded-full capitalize bg-(--label-bg) text-(--label-text) border border-(--label-border)">
+      <span className="text-xs px-2 py-0.5 rounded-full capitalize bg-(--label-bg) text-(--label-text)">
         {task.label}
       </span>
       <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text-(--color-danger)">

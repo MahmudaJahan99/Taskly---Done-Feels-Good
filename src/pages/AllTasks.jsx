@@ -3,8 +3,11 @@ import ProgressBar from '../components/ui/ProgressBar';
 import FilterBar from "../components/FilterBar/FilterBar";
 import TaskList from "../components/TaskList/TaskList";
 import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
+import { LABEL_COLORS } from '../constants/labels';
 
-const FILTERS = ['all', 'active', 'done', 'work', 'health', 'personal']
+const BASE_FILTERS = ["all", "active", "done"];
+const LABEL_FILTERS = LABEL_COLORS.map((l) => l.name);
+const FILTERS = [...BASE_FILTERS, ...LABEL_FILTERS];
 
 const AllTasks = () => {
     const tasks = useTaskStore((s) => s.tasks)
