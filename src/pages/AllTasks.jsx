@@ -14,16 +14,26 @@ const AllTasks = () => {
     const tasks = useTaskStore((s) => s.tasks)
     const filter = useTaskStore((s) => s.filter)
 
-    const activeTasks = tasks.filter(t => !t.done)
-    const doneTasks = tasks.filter(t => t.done)
+    const { activeTasks, doneTasks, visibleTasks } = useMemo(() => {
+        const activeTasks = [];
+        const doneTasks = [];
 
-    const visibleTasks = useMemo(() => {
-        if (filter === 'active') return activeTasks
-        if (filter === 'done') return doneTasks
-        if (LABEL_FILTERS.includes(filter))
-            return tasks.filter((t) => t.label === filter)
-        return tasks
-    }, [tasks, filter])
+        for (const task of tasks) {
+            (task.done ? doneTasks : activeTasks).push(task);
+        }
+
+        let visibleTasks = tasks;
+
+        if (filter === "active") {
+            visibleTasks = activeTasks;
+        } else if (filter === "done") {
+            visibleTasks = doneTasks;
+        } else if (LABEL_FILTERS.includes(filter)) {
+            visibleTasks = tasks.filter((t) => t.label === filter);
+        }
+
+        return { activeTasks, doneTasks, visibleTasks };
+    }, [tasks, filter]);
 
     return (
         <section>
