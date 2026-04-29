@@ -13,10 +13,8 @@ export default function Sidebar() {
 
   const allCount = tasks.length;
 
-  const todayCount = tasks.filter(task => {
-    const today = new Date().toDateString();
-    return new Date(task.createdAt).toDateString() === today;
-  }).length;
+  const todayStr = new Date().toLocaleDateString("en-CA");
+  const todayCount = tasks.filter((task) => task.dueDate === todayStr && !task.done).length;
 
   const completedCount = tasks.filter(task => task.done).length;
 
