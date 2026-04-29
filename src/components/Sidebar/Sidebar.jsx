@@ -35,6 +35,10 @@ export default function Sidebar() {
 
   const labels = LABEL_COLORS;
 
+  console.log("todayStr:", todayStr);
+console.log("task dueDates:", tasks.map(t => t.dueDate));
+console.log("matches:", tasks.map(t => t.dueDate === todayStr));
+
   return (
     <aside className='w-50 flex flex-col gap-1'>
       {/* Logo */}

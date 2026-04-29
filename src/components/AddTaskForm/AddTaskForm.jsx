@@ -5,9 +5,14 @@ import { LABEL_COLORS } from "../../constants/labels";
 export default function AddTaskForm() {
   const addTask = useTaskStore((s) => s.addTask);
 
+  const today = new Date();
+  const minDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+    .toISOString()
+    .split("T")[0];
+
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("work");
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState(minDate);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -25,11 +30,6 @@ export default function AddTaskForm() {
     setTitle("");
     setDueDate("");
   }
-
-  const today = new Date();
-  const minDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-    .toISOString()
-    .split("T")[0];
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 my-3">

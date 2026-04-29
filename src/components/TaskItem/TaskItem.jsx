@@ -115,7 +115,7 @@ export default function TaskItem({ task }) {
         )}
       </div>
 
-      <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
+      <div className="flex items-center gap-2 shrink-0 ml-auto">
         {!task.done && (
           editing ? (
             <button onClick={handleSave} className="text-xs cursor-pointer text-(--color-primary)">
