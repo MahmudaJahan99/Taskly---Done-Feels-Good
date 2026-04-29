@@ -18,8 +18,13 @@ export default function Sidebar() {
 
   const completedCount = tasks.filter(task => task.done).length;
 
-  const upcomingCount = 0;
-
+  const upcomingCount = tasks.filter((task) => {
+    if (task.done || !task.dueDate) return false;
+    const diffDays = Math.round(
+      (new Date(task.dueDate + "T00:00:00") - new Date().setHours(0, 0, 0, 0)) / 86_400_000
+    );
+    return diffDays > 0;
+  }).length;
 
   const navItems = [
     { to: '/', icon: <IoCheckboxOutline />, label: 'All tasks', count: allCount },

@@ -23,6 +23,7 @@ export default function AddTaskForm() {
     });
 
     setTitle("");
+    setDueDate("");
   }
 
   const today = new Date();
