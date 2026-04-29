@@ -10,6 +10,7 @@ const FilterBar = ({ filters }) => {
         <button
           key={label}
           onClick={() => setFilter(label)}
+          aria-pressed={filter === label}
           className={`px-3 py-1 rounded-full text-sm border transition-all cursor-pointer capitalize
             ${filter === label
               ? 'text-(--color-bg) border-transparent bg-(--color-primary)'

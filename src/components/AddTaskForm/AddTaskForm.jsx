@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useTaskStore from "../../store/taskStore";
+import { LABEL_COLORS } from "../../constants/labels";
 
 export default function AddTaskForm() {
   const addTask = useTaskStore((s) => s.addTask);
@@ -13,7 +14,7 @@ export default function AddTaskForm() {
     if (!title.trim()) return;
 
     addTask({
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       title,
       label: label.toLowerCase().trim(),
       done: false,
@@ -26,6 +27,8 @@ export default function AddTaskForm() {
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 my-3">
       <input
+        id="task-title"
+        aria-label="New task title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a task..."
@@ -36,11 +39,11 @@ export default function AddTaskForm() {
         value={label}
         onChange={(e) => setLabel(e.target.value)}
       >
-        <option className="capitalize">Work</option>
-        <option className="capitalize">Health</option>
-        <option className="capitalize">Personal</option>
-        <option className="capitalize">Study</option>
-        <option className="capitalize">Other</option>
+        {LABEL_COLORS.map((l) => (
+          <option key={l.name} value={l.name}>
+            {l.name.charAt(0).toUpperCase() + l.name.slice(1)}
+          </option>
+        ))}
       </select>
 
       <button className="primary-btn flex items-center gap-2">

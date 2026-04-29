@@ -1,12 +1,24 @@
+import { useState } from 'react'
 import { LABEL_COLORS } from '../../constants/labels'
 import useTaskStore from '../../store/taskStore'
 
 export default function TaskItem({ task }) {
   const toggleTask = useTaskStore((s) => s.toggleDone)
   const deleteTask = useTaskStore((s) => s.deleteTask)
+  const editTask = useTaskStore((s) => s.editTask)
+
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState(task.title)
+
+  function handleSave() {
+    if (draft.trim()) {
+      editTask(task.id, { title: draft.trim() })
+    }
+    setEditing(false)
+  }
 
   const labelColor = LABEL_COLORS.find((l) => l.name === task.label)
-    ?? { bg: '#F3F4F6', text: '#6B7280', border: '#E5E7EB' }
+    ?? { bg: '#F3F4F6', text: '#6B7280' }
 
   return (
     <li
@@ -19,16 +31,54 @@ export default function TaskItem({ task }) {
       <input
         type="checkbox"
         checked={task.done}
+        aria-label={`Mark "${task.title}" as ${task.done ? 'active' : 'done'}`}
         onChange={() => toggleTask(task.id)}
         className="accent-(--color-primary) w-4 h-4 cursor-pointer"
       />
-      <span className={`flex-1 text-sm transition-opacity ${task.done ? 'line-through opacity-50' : 'opacity-100'}`}>
-        {task.title}
-      </span>
-      <span className="text-xs px-2 py-0.5 rounded-full capitalize bg-(--label-bg) text-(--label-text)">
-        {task.label}
-      </span>
-      <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text-(--color-danger)">
+      <div className="flex-1 flex flex-col gap-1">
+        {editing ? (
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={handleSave}
+            onKeyDown={(e) => e.key === 'Enter' && handleSave()}
+            className="text-sm border px-1 rounded"
+            autoFocus
+          />
+        ) : (
+          <span
+            className={`text-sm transition-opacity ${task.done ? 'line-through opacity-50' : 'opacity-100'
+              }`}
+          >
+            {task.title}
+          </span>
+        )}
+
+        <span className="w-fit text-xs px-2 py-0.5 rounded-full capitalize bg-(--label-bg) text-(--label-text)">
+          {task.label}
+        </span>
+      </div>
+
+      {editing ? (
+        <button
+          onClick={handleSave}
+          className="text-xs cursor-pointer text-(--color-primary)"
+        >
+          Save
+        </button>
+      ) : (
+        <button
+          onClick={() => setEditing(true)}
+          className="text-xs cursor-pointer text-(--color-primary)"
+        >
+          Edit
+        </button>
+      )}
+
+      <button
+        onClick={() => deleteTask(task.id)}
+        className="text-xs cursor-pointer text-(--color-danger)"
+      >
         Delete
       </button>
     </li>
