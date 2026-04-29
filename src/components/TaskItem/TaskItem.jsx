@@ -25,6 +25,8 @@ export default function TaskItem({ task }) {
   const [draftLabel, setDraftLabel] = useState(task.label)
   const [draftDue, setDraftDue] = useState(task.dueDate ?? '')
 
+  const dueInfo = formatDueDate(task.dueDate)
+
   function handleSave() {
     if (draft.trim()) {
       editTask(task.id, {
@@ -59,71 +61,76 @@ export default function TaskItem({ task }) {
         checked={task.done}
         aria-label={`Mark "${task.title}" as ${task.done ? 'active' : 'done'}`}
         onChange={() => toggleTask(task.id)}
-        className="accent-(--color-primary) w-4 h-4 cursor-pointer"
+        className="accent-(--color-primary) w-4 h-4 cursor-pointer flex-shrink-0"
       />
 
-      {editing ? (
-        <div className="flex flex-col gap-1">
-          <input
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="text-sm border px-1 rounded"
-            autoFocus
-          />
-          {/* ✅ add these two below the title input */}
-          <div className="flex gap-2">
-            <select
-              value={draftLabel}
-              onChange={(e) => setDraftLabel(e.target.value)}
-              className="text-xs border rounded px-1"
-            >
-              {LABEL_COLORS.map((l) => (
-                <option key={l.name} value={l.name}>
-                  {l.name.charAt(0).toUpperCase() + l.name.slice(1)}
-                </option>
-              ))}
-            </select>
+      <div className="flex-1 flex flex-col gap-1 min-w-0">
+        {editing ? (
+          <>
             <input
-              type="date"
-              value={draftDue}
-              onChange={(e) => setDraftDue(e.target.value)}
-              className="text-xs border rounded px-1"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="text-sm border px-1 rounded"
+              autoFocus
             />
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-1">
-          <span className={`text-sm transition-opacity ${task.done ? 'line-through opacity-50' : ''}`}>
-            {task.title}
-          </span>
 
-          {/* ← add this */}
-          {!task.done && (() => {
-            const due = formatDueDate(task.dueDate)
-            return due ? (
-              <span className={`text-xs ${due.color}`}>{due.label}</span>
-            ) : null
-          })()}
-        </div>
-      )}
+            <div className="flex gap-2">
+              <select
+                value={draftLabel}
+                onChange={(e) => setDraftLabel(e.target.value)}
+                className="text-xs border rounded px-1"
+              >
+                {LABEL_COLORS.map((l) => (
+                  <option key={l.name} value={l.name}>
+                    {l.name.charAt(0).toUpperCase() + l.name.slice(1)}
+                  </option>
+                ))}
+              </select>
 
-      {/* Edit — hidden for completed tasks */}
-      {!task.done && (
-        editing ? (
-          <button onClick={handleSave} className="text-xs cursor-pointer text-(--color-primary)">
-            Save
-          </button>
+              <input
+                type="date"
+                value={draftDue}
+                onChange={(e) => setDraftDue(e.target.value)}
+                className="text-xs border rounded px-1"
+              />
+            </div>
+          </>
         ) : (
-          <button onClick={() => setEditing(true)} className="text-xs cursor-pointer text-(--color-primary)">
-            Edit
-          </button>
-        )
-      )}
+          <>
+            <span className={`text-sm transition-opacity ${task.done ? 'line-through opacity-50' : ''}`}>
+              {task.title}
+            </span>
 
-      <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text-(--color-danger)">
-        Delete
-      </button>
+            <div className="flex items-center gap-2">
+              <span className="text-xs px-2 py-0.5 rounded-full capitalize"
+                style={{ background: 'var(--label-bg)', color: 'var(--label-text)' }}>
+                {task.label}
+              </span>
+              {!task.done && dueInfo && (
+                <span className={`text-xs ${dueInfo.color}`}>{dueInfo.label}</span>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
+        {!task.done && (
+          editing ? (
+            <button onClick={handleSave} className="text-xs cursor-pointer text-(--color-primary)">
+              Save
+            </button>
+          ) : (
+            <button onClick={() => setEditing(true)} className="text-xs cursor-pointer text-(--color-primary)">
+              Edit
+            </button>
+          )
+        )}
+        <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text-(--color-danger)">
+          Delete
+        </button>
+      </div>
     </li>
   )
 }
