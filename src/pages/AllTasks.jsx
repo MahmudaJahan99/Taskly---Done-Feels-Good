@@ -1,3 +1,4 @@
+// AllTasks.jsx
 import useTaskStore from '../store/taskStore'
 import ProgressBar from '../components/ui/ProgressBar';
 import FilterBar from "../components/FilterBar/FilterBar";
@@ -11,72 +12,82 @@ const LABEL_FILTERS = LABEL_COLORS.map((l) => l.name);
 const FILTERS = [...BASE_FILTERS, ...LABEL_FILTERS];
 
 const AllTasks = () => {
-    const tasks = useTaskStore((s) => s.tasks)
-    const filter = useTaskStore((s) => s.filter)
+  const tasks = useTaskStore((s) => s.tasks);
+  const filter = useTaskStore((s) => s.filter);
 
-    const { activeTasks, doneTasks, visibleTasks } = useMemo(() => {
-        const activeTasks = [];
-        const doneTasks = [];
+  const { activeTasks, doneTasks, visibleActive, visibleDone } = useMemo(() => {
+    const active = tasks.filter((t) => !t.done);
+    const done = tasks.filter((t) => t.done);
 
-        for (const task of tasks) {
-            (task.done ? doneTasks : activeTasks).push(task);
-        }
+    if (filter === 'active') return { activeTasks: active, doneTasks: done, visibleActive: active, visibleDone: [] };
+    if (filter === 'done')   return { activeTasks: active, doneTasks: done, visibleActive: [], visibleDone: done };
 
-        let visibleTasks = tasks;
+    if (LABEL_FILTERS.includes(filter)) {
+      const byLabel = tasks.filter((t) => t.label === filter);
+      return {
+        activeTasks: active,
+        doneTasks: done,
+        visibleActive: byLabel.filter((t) => !t.done),
+        visibleDone: byLabel.filter((t) => t.done),
+      };
+    }
 
-        if (filter === "active") {
-            visibleTasks = activeTasks;
-        } else if (filter === "done") {
-            visibleTasks = doneTasks;
-        } else if (LABEL_FILTERS.includes(filter)) {
-            visibleTasks = tasks.filter((t) => t.label === filter);
-        }
+    return { activeTasks: active, doneTasks: done, visibleActive: active, visibleDone: done };
+  }, [tasks, filter]);
 
-        return { activeTasks, doneTasks, visibleTasks };
-    }, [tasks, filter]);
+  return (
+    <section>
+      <div className="border-b pb-4 border-(--color-border)">
+        <h1>All Tasks</h1>
+      </div>
 
-    return (
-        <section>
-            {/* Page title */}
-            <div className="border-b pb-4 border-(--color-border)">
-                <h1>All Tasks</h1>
-            </div>
+      <div className="grid md:grid-cols-3 gap-2 my-3">
+        <div className="primary-card">
+          <span className="text-(--color-muted) text-sm">Total</span>
+          <span className="text-[1.5rem]">{tasks.length}</span>
+        </div>
+        <div className="primary-card">
+          <span className="text-(--color-muted) text-sm">Active</span>
+          <span className="text-[1.5rem]">{activeTasks.length}</span>
+        </div>
+        <div className="primary-card">
+          <span className="text-(--color-muted) text-sm">Done</span>
+          <span className="text-[1.5rem]">{doneTasks.length}</span>
+        </div>
+      </div>
 
-            {/* Tasks Card - Total, Active, & Done */}
-            <div className="grid md:grid-cols-3 gap-2 my-3">
-                <div className="primary-card">
-                    <span className="text-(--color-muted) text-sm">Total</span>
-                    <span className="text-[1.5rem]">
-                        {tasks.length}
-                    </span>
-                </div>
-                <div className="primary-card">
-                    <span className="text-(--color-muted) text-sm">Active</span>
-                    <span className="text-[1.5rem]">
-                        {activeTasks.length}
-                    </span>
-                </div>
-                <div className="primary-card">
-                    <span className="text-(--color-muted) text-sm">Done</span>
-                    <span className="text-[1.5rem]">
-                        {doneTasks.length}
-                    </span>
-                </div>
-            </div>
+      <AddTaskForm />
+      <ProgressBar total={tasks.length} done={doneTasks.length} />
+      <FilterBar filters={FILTERS} />
 
-            {/* Add Tasks Form */}
-            <AddTaskForm />
+      {/* Active section */}
+      {visibleActive.length > 0 && (
+        <div className="mb-6">
+          <p className="uppercase tracking-[0.08em] mb-2 text-sm text-(--color-muted)">
+            Active
+          </p>
+          <TaskList tasks={visibleActive} />
+        </div>
+      )}
 
-            {/* Progress Bar */}
-            <ProgressBar total={tasks.length} done={doneTasks.length} />
+      {/* Completed section */}
+      {visibleDone.length > 0 && (
+        <div>
+          <p className="uppercase tracking-[0.08em] mb-2 text-sm text-(--color-muted)">
+            Completed
+          </p>
+          <TaskList tasks={visibleDone} />
+        </div>
+      )}
 
-            {/* Filter Buttons */}
-            <FilterBar filters={FILTERS} />
-
-            {/* Tasks */}
-            <TaskList tasks={visibleTasks} />
-        </section>
-    );
+      {/* Empty state when nothing matches the filter */}
+      {visibleActive.length === 0 && visibleDone.length === 0 && (
+        <p className="text-center py-8 text-sm text-(--color-muted)">
+          No tasks here yet.
+        </p>
+      )}
+    </section>
+  );
 };
 
 export default AllTasks;
