@@ -7,22 +7,29 @@ import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
 import { LABEL_COLORS } from '../constants/labels';
 import { useMemo, useState } from 'react';
 
+// Filters
 const BASE_FILTERS = ["all", "active", "done"];
 const LABEL_FILTERS = LABEL_COLORS.map((l) => l.name);
 const FILTERS = [...BASE_FILTERS, ...LABEL_FILTERS];
 
 const AllTasks = () => {
+  // Get tasks from the store
   const tasks = useTaskStore((s) => s.tasks);
 
+  // State for the current filter
   const [filter, setFilter] = useState("all");
 
+  // Memoize the filtered tasks to avoid unnecessary calculations on re-renders
   const { activeTasks, doneTasks, visibleActive, visibleDone } = useMemo(() => {
+    // Separate active and done tasks first
     const active = tasks.filter((t) => !t.done);
     const done = tasks.filter((t) => t.done);
 
+    // Filter tasks based on the current filter
     if (filter === 'active') return { activeTasks: active, doneTasks: done, visibleActive: active, visibleDone: [] };
     if (filter === 'done') return { activeTasks: active, doneTasks: done, visibleActive: [], visibleDone: done };
 
+    // If the filter is a label, show only tasks with that label
     if (LABEL_FILTERS.includes(filter)) {
       const byLabel = tasks.filter((t) => t.label === filter);
       return {
@@ -38,10 +45,12 @@ const AllTasks = () => {
 
   return (
     <section>
+      {/* Page header */}
       <div className="border-b pb-4 border-(--color-border)">
         <h1>All Tasks</h1>
       </div>
 
+      {/* Task stats */}
       <div className="grid md:grid-cols-3 gap-2 my-3">
         <div className="primary-card">
           <span className="text-(--color-muted) text-sm">Total</span>
@@ -57,13 +66,16 @@ const AllTasks = () => {
         </div>
       </div>
 
+      {/* Task form and progress bar */}
       <AddTaskForm />
       <ProgressBar total={tasks.length} done={doneTasks.length} />
+
+      {/* Filter bar */}
       <FilterBar filters={FILTERS} filter={filter} setFilter={setFilter} />
 
-      {/* Active section */}
+      {/* Active Label tasks */}
       {visibleActive.length > 0 && (
-        <div className="mb-6">
+        <div className="mb-48">
           <p className="uppercase tracking-[0.08em] mb-2 text-sm text-(--color-muted)">
             Active
           </p>
@@ -71,7 +83,7 @@ const AllTasks = () => {
         </div>
       )}
 
-      {/* Completed section */}
+      {/* Completed Label tasks */}
       {visibleDone.length > 0 && (
         <div>
           <p className="uppercase tracking-[0.08em] mb-2 text-sm text-(--color-muted)">

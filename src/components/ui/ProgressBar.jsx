@@ -1,4 +1,5 @@
 export default function ProgressBar({ total, done }) {
+  // Calculate the percentage of tasks completed
   const percent = total === 0 ? 0 : Math.round((done / total) * 100)
 
   return (
@@ -17,6 +18,7 @@ export default function ProgressBar({ total, done }) {
           }}
         />
       </div>
+      {/* Progress percentage */}
       <span className="text-xs whitespace-nowrap" style={{ color: 'var(--color-muted)' }}>
         {percent}% complete
       </span>

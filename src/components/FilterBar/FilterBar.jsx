@@ -1,5 +1,4 @@
 const FilterBar = ({ filters, filter, setFilter }) => {
-
   return (
     <div className="flex gap-2 flex-wrap my-4">
       {filters.map((label) => (
@@ -10,7 +9,7 @@ const FilterBar = ({ filters, filter, setFilter }) => {
           className={`px-3 py-1 rounded-full text-sm border transition-all cursor-pointer capitalize
             ${filter === label
               ? 'text-(--color-bg) border-transparent bg-(--color-primary)'
-              : 'border-transparent bg-(--color-surface) text-(--color-muted)'
+              : 'text-(--color-muted) border-transparent bg-(--color-surface)'
             }`}
         >
           {label}

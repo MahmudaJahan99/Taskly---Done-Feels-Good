@@ -8,16 +8,18 @@ import useTaskStore from '../../store/taskStore';
 import { LABEL_COLORS } from '../../constants/labels';
 
 export default function Sidebar() {
-
+  // Calculate counts for nav items
   const tasks = useTaskStore(state => state.tasks)
-
   const allCount = tasks.length;
 
+  // Calculate today's tasks count
   const todayStr = new Date().toLocaleDateString("en-CA");
   const todayCount = tasks.filter((task) => task.dueDate === todayStr && !task.done).length;
 
+  // Calculate completed tasks count
   const completedCount = tasks.filter(task => task.done).length;
 
+  // Calculate upcoming tasks count (due date in future and not done)
   const upcomingCount = tasks.filter((task) => {
     if (task.done || !task.dueDate) return false;
     const diffDays = Math.round(
@@ -26,6 +28,7 @@ export default function Sidebar() {
     return diffDays > 0;
   }).length;
 
+  // Define nav items with their respective counts
   const navItems = [
     { to: '/', icon: <IoCheckboxOutline />, label: 'All tasks', count: allCount },
     { to: '/today', icon: <MdAccessTime />, label: 'Today', count: todayCount },
@@ -33,11 +36,8 @@ export default function Sidebar() {
     { to: '/done', icon: <IoCheckmarkCircleOutline />, label: 'Completed', count: completedCount },
   ]
 
+  // Get label colors from constants
   const labels = LABEL_COLORS;
-
-  console.log("todayStr:", todayStr);
-console.log("task dueDates:", tasks.map(t => t.dueDate));
-console.log("matches:", tasks.map(t => t.dueDate === todayStr));
 
   return (
     <aside className='w-50 flex flex-col gap-1'>
