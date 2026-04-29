@@ -9,7 +9,7 @@
     --color-text: #3D2B1F;
     --color-muted: #A07858;
     --color-done: #7BAF7B;
-    --color-danger: #C0634D;
+    --color-danger: #FF4E44;
 
     --font-body: "Lato", sans-serif;
     --font-display: "Playfair Display", serif;
@@ -31,6 +31,26 @@ body {
 
 .primary-btn {
     background: var(--color-primary);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-bg);
+    cursor: pointer;
+}
+
+.ghost-btn {
+    border: 1px solid var(--color-primary);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: var(--color-danger);
     padding: 8px 10px;
     border-radius: 8px;
     font-size: 13px;

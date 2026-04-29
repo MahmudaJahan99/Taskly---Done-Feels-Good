@@ -61,7 +61,7 @@ export default function TaskItem({ task }) {
         checked={task.done}
         aria-label={`Mark "${task.title}" as ${task.done ? 'active' : 'done'}`}
         onChange={() => toggleTask(task.id)}
-        className="accent-(--color-primary) w-4 h-4 cursor-pointer flex-shrink-0"
+        className="accent-(--color-primary) w-4 h-4 cursor-pointer shrink-0"
       />
 
       <div className="flex-1 flex flex-col gap-1 min-w-0">
@@ -118,16 +118,16 @@ export default function TaskItem({ task }) {
       <div className="flex items-center gap-2 shrink-0 ml-auto">
         {!task.done && (
           editing ? (
-            <button onClick={handleSave} className="text-xs cursor-pointer text-(--color-primary)">
+            <button onClick={handleSave} className="ghost-btn">
               Save
             </button>
           ) : (
-            <button onClick={() => setEditing(true)} className="text-xs cursor-pointer text-(--color-primary)">
+            <button onClick={() => setEditing(true)} className="ghost-btn">
               Edit
             </button>
           )
         )}
-        <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text-(--color-danger)">
+        <button onClick={() => deleteTask(task.id)} className="delete-btn">
           Delete
         </button>
       </div>
