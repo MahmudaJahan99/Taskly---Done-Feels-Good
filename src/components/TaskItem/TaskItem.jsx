@@ -1,4 +1,3 @@
-// TaskItem.jsx
 import { useState } from 'react'
 import { LABEL_COLORS } from '../../constants/labels'
 import useTaskStore from '../../store/taskStore'
@@ -23,17 +22,28 @@ export default function TaskItem({ task }) {
 
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(task.title)
+  const [draftLabel, setDraftLabel] = useState(task.label)
+  const [draftDue, setDraftDue] = useState(task.dueDate ?? '')
 
   function handleSave() {
     if (draft.trim()) {
-      editTask(task.id, { title: draft.trim() })
+      editTask(task.id, {
+        title: draft.trim(),
+        label: draftLabel,
+        dueDate: draftDue || null,
+      })
     }
     setEditing(false)
   }
 
   function handleKeyDown(e) {
     if (e.key === 'Enter') handleSave()
-    if (e.key === 'Escape') { setDraft(task.title); setEditing(false) }
+    if (e.key === 'Escape') {
+      setDraft(task.title)
+      setDraftLabel(task.label)
+      setDraftDue(task.dueDate ?? '')
+      setEditing(false)
+    }
   }
 
   const labelColor = LABEL_COLORS.find((l) => l.name === task.label)
@@ -52,34 +62,51 @@ export default function TaskItem({ task }) {
         className="accent-(--color-primary) w-4 h-4 cursor-pointer"
       />
 
-      <div className="flex-1 flex flex-col gap-1">
-        {editing ? (
+      {editing ? (
+        <div className="flex flex-col gap-1">
           <input
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            onBlur={handleSave}
             onKeyDown={handleKeyDown}
             className="text-sm border px-1 rounded"
             autoFocus
           />
-        ) : (
-          <span className={`text-sm transition-opacity ${task.done ? 'line-through opacity-50' : 'opacity-100'}`}>
+          {/* ✅ add these two below the title input */}
+          <div className="flex gap-2">
+            <select
+              value={draftLabel}
+              onChange={(e) => setDraftLabel(e.target.value)}
+              className="text-xs border rounded px-1"
+            >
+              {LABEL_COLORS.map((l) => (
+                <option key={l.name} value={l.name}>
+                  {l.name.charAt(0).toUpperCase() + l.name.slice(1)}
+                </option>
+              ))}
+            </select>
+            <input
+              type="date"
+              value={draftDue}
+              onChange={(e) => setDraftDue(e.target.value)}
+              className="text-xs border rounded px-1"
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-1">
+          <span className={`text-sm transition-opacity ${task.done ? 'line-through opacity-50' : ''}`}>
             {task.title}
           </span>
-        )}
 
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="w-fit text-xs px-2 py-0.5 rounded-full capitalize bg-(--label-bg) text-(--label-text)">
-            {task.label}
-          </span>
+          {/* ← add this */}
           {!task.done && (() => {
-            const due = formatDueDate(task.dueDate);
+            const due = formatDueDate(task.dueDate)
             return due ? (
               <span className={`text-xs ${due.color}`}>{due.label}</span>
-            ) : null;
+            ) : null
           })()}
         </div>
-      </div>
+      )}
 
       {/* Edit — hidden for completed tasks */}
       {!task.done && (

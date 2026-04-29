@@ -5,7 +5,7 @@ import FilterBar from "../components/FilterBar/FilterBar";
 import TaskList from "../components/TaskList/TaskList";
 import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
 import { LABEL_COLORS } from '../constants/labels';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 const BASE_FILTERS = ["all", "active", "done"];
 const LABEL_FILTERS = LABEL_COLORS.map((l) => l.name);
@@ -13,14 +13,15 @@ const FILTERS = [...BASE_FILTERS, ...LABEL_FILTERS];
 
 const AllTasks = () => {
   const tasks = useTaskStore((s) => s.tasks);
-  const filter = useTaskStore((s) => s.filter);
+
+  const [filter, setFilter] = useState("all");
 
   const { activeTasks, doneTasks, visibleActive, visibleDone } = useMemo(() => {
     const active = tasks.filter((t) => !t.done);
     const done = tasks.filter((t) => t.done);
 
     if (filter === 'active') return { activeTasks: active, doneTasks: done, visibleActive: active, visibleDone: [] };
-    if (filter === 'done')   return { activeTasks: active, doneTasks: done, visibleActive: [], visibleDone: done };
+    if (filter === 'done') return { activeTasks: active, doneTasks: done, visibleActive: [], visibleDone: done };
 
     if (LABEL_FILTERS.includes(filter)) {
       const byLabel = tasks.filter((t) => t.label === filter);
@@ -58,7 +59,7 @@ const AllTasks = () => {
 
       <AddTaskForm />
       <ProgressBar total={tasks.length} done={doneTasks.length} />
-      <FilterBar filters={FILTERS} />
+      <FilterBar filters={FILTERS} filter={filter} setFilter={setFilter} />
 
       {/* Active section */}
       {visibleActive.length > 0 && (

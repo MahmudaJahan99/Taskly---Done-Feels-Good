@@ -5,9 +5,6 @@ const useTaskStore = create(
   persist(
     (set) => ({
       tasks: [],
-      filter: "all",
-
-      setFilter: (filter) => set({ filter }),
 
       toggleDone: (id) =>
         set((state) => ({
@@ -31,6 +28,7 @@ const useTaskStore = create(
           ),
         })),
     }),
+    
     {
       name: "taskly-storage",
       partialize: (state) => ({ tasks: state.tasks }),

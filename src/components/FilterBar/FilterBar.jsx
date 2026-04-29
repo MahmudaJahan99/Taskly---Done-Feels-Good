@@ -1,8 +1,4 @@
-import useTaskStore from '../../store/taskStore'
-
-const FilterBar = ({ filters }) => {
-  const filter = useTaskStore((s) => s.filter)
-  const setFilter = useTaskStore((s) => s.setFilter)
+const FilterBar = ({ filters, filter, setFilter }) => {
 
   return (
     <div className="flex gap-2 flex-wrap my-4">
