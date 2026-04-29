@@ -4,6 +4,7 @@ import FilterBar from "../components/FilterBar/FilterBar";
 import TaskList from "../components/TaskList/TaskList";
 import AddTaskForm from "../components/AddTaskForm/AddTaskForm";
 import { LABEL_COLORS } from '../constants/labels';
+import { useMemo } from 'react';
 
 const BASE_FILTERS = ["all", "active", "done"];
 const LABEL_FILTERS = LABEL_COLORS.map((l) => l.name);
@@ -16,14 +17,13 @@ const AllTasks = () => {
     const activeTasks = tasks.filter(t => !t.done)
     const doneTasks = tasks.filter(t => t.done)
 
-    function getVisibleTasks() {
+    const visibleTasks = useMemo(() => {
         if (filter === 'active') return activeTasks
         if (filter === 'done') return doneTasks
-        if (['work', 'health', 'personal'].includes(filter))
-            return tasks.filter(t => t.label === filter)
+        if (LABEL_FILTERS.includes(filter))
+            return tasks.filter((t) => t.label === filter)
         return tasks
-    }
-    const visibleTasks = getVisibleTasks()
+    }, [tasks, filter])
 
     return (
         <section>
