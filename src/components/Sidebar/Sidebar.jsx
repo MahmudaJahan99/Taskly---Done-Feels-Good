@@ -35,7 +35,7 @@ export default function Sidebar() {
   return (
     <aside className='w-50 flex flex-col gap-1'>
       {/* Logo */}
-      <Link to={"/"} href='#' className='flex items-center gap-2 mb-4.5'>
+      <Link to={"/"} className='flex items-center gap-2 mb-4.5'>
         <div className='w-8 h-8 flex items-center justify-center'>
           <img src={icon} alt="Taskly Logo" />
         </div>
@@ -70,8 +70,8 @@ export default function Sidebar() {
       {labels.map(label => (
         <NavLink
           key={label.name}
-          to={label.name}
-          end={label.to === '/'}
+          to={`/${label.name}`}
+          end
           className={({ isActive }) =>
             `sidebar-navlink ${isActive ? 'active' : ''}`
           }
