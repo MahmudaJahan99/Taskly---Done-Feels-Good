@@ -9,37 +9,27 @@ export default function TaskItem({ task }) {
     ?? { bg: '#F3F4F6', text: '#6B7280', border: '#E5E7EB' }
 
   return (
-    <li className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-white">
+    <li
+      className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-white"
+      style={{
+        '--label-bg': labelColor.bg,
+        '--label-text': labelColor.text,
+        '--label-border': labelColor.border,
+      }}
+    >
       <input
         type="checkbox"
         checked={task.done}
         onChange={() => toggleTask(task.id)}
         className="accent-(--color-primary) w-4 h-4 cursor-pointer"
       />
-      <span
-        className="flex-1 text-sm"
-        style={{
-          textDecoration: task.done ? 'line-through' : 'none',
-          opacity: task.done ? 0.5 : 1,
-        }}
-      >
+      <span className={`flex-1 text-sm transition-opacity ${task.done ? 'line-through opacity-50' : 'opacity-100'}`}>
         {task.title}
       </span>
-      <span
-        className="text-xs px-2 py-0.5 rounded-full capitalize"
-        style={{
-          backgroundColor: labelColor.bg,
-          color: labelColor.text,
-          border: `1px solid ${labelColor.border}`,
-        }}
-      >
+      <span className="text-xs px-2 py-0.5 rounded-full capitalize bg-(--label-bg) text-(--label-text) border border-(--label-border)">
         {task.label}
       </span>
-      <button
-        onClick={() => deleteTask(task.id)}
-        className="text-xs cursor-pointer"
-        style={{ color: '#C0634D' }}
-      >
+      <button onClick={() => deleteTask(task.id)} className="text-xs cursor-pointer text-(--color-danger)">
         Delete
       </button>
     </li>

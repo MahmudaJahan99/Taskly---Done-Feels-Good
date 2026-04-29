@@ -10,7 +10,7 @@ export const LABEL_COLORS = [
   {
     to: "/health",
     name: "health",
-    bg: "#7BAF7B",
+    bg: "#C0DD97",
     text: "#065F46",
     border: "#A7F3D0",
   },
