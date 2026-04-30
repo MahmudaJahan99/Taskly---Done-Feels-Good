@@ -139,18 +139,18 @@ export default function TaskItem({ task }) {
       <div className="flex items-center gap-2 shrink-0 ml-auto">
         {!task.done && (
           editing ? (
-            <button onClick={handleSave} className="ghost-btn">
+            <button onClick={handleSave} className="btn ghost-btn">
               Save
             </button>
           ) : (
-            <button onClick={() => setEditing(true)} className="ghost-btn">
+            <button onClick={() => setEditing(true)} className="btn ghost-btn">
               Edit
             </button>
           )
         )}
 
         {/* Delete button */}
-        <button onClick={() => deleteTask(task.id)} className="delete-btn">
+        <button onClick={() => deleteTask(task.id)} className="btn delete-btn">
           Delete
         </button>
       </div>

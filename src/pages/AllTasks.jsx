@@ -19,7 +19,7 @@ const AllTasks = () => {
   // State for the current filter
   const [filter, setFilter] = useState("all");
 
-  // Memoize the filtered tasks to avoid unnecessary calculations on re-renders
+  // Memorize the filtered tasks to avoid unnecessary calculations on re-renders
   const { activeTasks, doneTasks, visibleActive, visibleDone } = useMemo(() => {
     // Separate active and done tasks first
     const active = tasks.filter((t) => !t.done);

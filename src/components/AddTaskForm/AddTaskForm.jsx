@@ -68,7 +68,7 @@ export default function AddTaskForm() {
       </select>
 
       {/* Add task button */}
-      <button className="primary-btn flex items-center gap-2">
+      <button className="btn primary-btn flex items-center gap-2">
         <span>+</span>
         <span>Add task</span>
       </button>
