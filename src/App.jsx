@@ -5,9 +5,7 @@ import AllTasks from './pages/AllTasks.jsx'
 import TodayTasks from './pages/TodayTasks.jsx'
 import UpcomingTasks from './pages/UpcomingTasks.jsx'
 import CompletedTasks from './pages/CompletedTasks.jsx'
-import WorkTasks from './pages/WorkTasks.jsx'
-import HealthTasks from './pages/HealthTasks.jsx'
-import PersonalTasks from './pages/PersonalTasks.jsx'
+import LabelPage from './pages/LabelPage.jsx'
 
 export default function App() {
   return (
@@ -17,9 +15,7 @@ export default function App() {
         <Route path="today" element={<TodayTasks />} />
         <Route path="upcomingTasks" element={<UpcomingTasks />} />
         <Route path="done" element={<CompletedTasks />} />
-        <Route path="work" element={<WorkTasks />} />
-        <Route path="health" element={<HealthTasks />} />
-        <Route path="personal" element={<PersonalTasks />} />
+        <Route path="/:label" element={<LabelPage />} />
       </Route>
     </Routes>
   )

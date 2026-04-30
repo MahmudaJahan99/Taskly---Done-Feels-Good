@@ -1,22 +1,10 @@
-import TaskList from "../components/TaskList/TaskList";
-import useTaskStore from "../store/taskStore";
+import { useFilteredTasks } from '../hooks/useFilteredTasks';
+import TaskPage from '../components/TaskPage/TaskPage';
 
-const TodayTasks = () => {
-    const tasks = useTaskStore((s) => s.tasks);
-    // Calculate today's tasks count
-    const todayStr = new Date().toLocaleDateString("en-CA");
-    const todayCount = tasks.filter((task) => task.dueDate === todayStr && !task.done);
-
-    return (
-        <section>
-            {/* Page header */}
-            <div className="border-b pb-4 border-(--color-border)">
-                <h1>Today's Tasks</h1>
-            </div>
-
-            <TaskList tasks={todayCount} />
-        </section>
-    );
-};
-
-export default TodayTasks;
+export default function Today() {
+  const { tasks, active, done, filter, setFilter } = useFilteredTasks("today");
+  return (
+    <TaskPage title="Today" tasks={tasks} active={active} done={done}
+      filter={filter} setFilter={setFilter} emptyMessage="Nothing due today. Enjoy!" />
+  );
+}
