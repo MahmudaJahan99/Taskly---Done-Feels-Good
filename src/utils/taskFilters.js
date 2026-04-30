@@ -10,13 +10,12 @@ export function filterTasks(tasks, view) {
     case "all":
       return tasks;
     case "today":
-      return tasks.filter((t) => t.dueDate === todayStr() && !t.done);
+      return tasks.filter((t) => t.dueDate === todayStr());
     case "upcoming":
-      return tasks.filter((t) => !t.done && t.dueDate && diffDays(t.dueDate) > 0);
+      return tasks.filter((t) => t.dueDate && diffDays(t.dueDate) > 0);
     case "done":
       return tasks.filter((t) => t.done);
     default:
-      // label view e.g. "work", "health"
       return tasks.filter((t) => t.label === view);
   }
 }

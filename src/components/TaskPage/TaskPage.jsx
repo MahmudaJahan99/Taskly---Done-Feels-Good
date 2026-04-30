@@ -7,9 +7,10 @@ const BASE_FILTERS = ["all", "active", "done"];
 
 export default function TaskPage({
   title,
-  tasks,           // all tasks in scope (for stats)
-  active,          // already-split active list
-  done,            // already-split done list
+  tasks,
+  statTasks,
+  active,
+  done,
   filter,
   setFilter,
   showAddForm = true,
@@ -18,6 +19,8 @@ export default function TaskPage({
   emptyMessage = "No tasks here yet.",
 }) {
   const filters = showFilters ? [...BASE_FILTERS, ...extraFilters] : [];
+  const stats = statTasks ?? tasks;
+  const statDone = stats.filter(t => t.done).length;
 
   return (
     <section>
@@ -28,20 +31,20 @@ export default function TaskPage({
       <div className="grid md:grid-cols-3 gap-2 my-3">
         <div className="primary-card">
           <span className="text-(--color-muted) text-sm">Total</span>
-          <span className="text-[1.5rem]">{tasks.length}</span>
+          <span className="text-[1.5rem]">{stats.length}</span>
         </div>
         <div className="primary-card">
           <span className="text-(--color-muted) text-sm">Active</span>
-          <span className="text-[1.5rem]">{active.length}</span>
+          <span className="text-[1.5rem]">{stats.filter(t => !t.done).length}</span>
         </div>
         <div className="primary-card">
           <span className="text-(--color-muted) text-sm">Done</span>
-          <span className="text-[1.5rem]">{done.length}</span>
+          <span className="text-[1.5rem]">{stats.filter(t => t.done).length}</span>
         </div>
       </div>
 
       {showAddForm && <AddTaskForm />}
-      <ProgressBar total={tasks.length} done={done.length} />
+      <ProgressBar total={stats.length} done={statDone} />
       {showFilters && <FilterBar filters={filters} filter={filter} setFilter={setFilter} />}
 
       {active.length > 0 && (

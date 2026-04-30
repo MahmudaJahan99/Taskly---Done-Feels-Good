@@ -13,7 +13,7 @@ export default function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<AllTasks />} />
         <Route path="today" element={<TodayTasks />} />
-        <Route path="upcomingTasks" element={<UpcomingTasks />} />
+        <Route path="upcoming" element={<UpcomingTasks />} />
         <Route path="done" element={<CompletedTasks />} />
         <Route path="/:label" element={<LabelPage />} />
       </Route>

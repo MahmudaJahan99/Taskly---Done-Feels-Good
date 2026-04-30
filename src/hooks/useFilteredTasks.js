@@ -1,22 +1,25 @@
 import { useMemo, useState } from "react";
 import useTaskStore from "../store/taskStore";
 import { filterTasks } from "../utils/taskFilters";
+import { LABEL_COLORS } from "../constants/labels";
+
+const LABEL_NAMES = new Set(LABEL_COLORS.map((l) => l.name));
 
 export function useFilteredTasks(view) {
-  const tasks = useTaskStore((s) => s.tasks);
-  const [filter, setFilter] = useState("all"); // secondary filter (active/done/label)
+  const allTasks = useTaskStore((s) => s.tasks);
+  const [filter, setFilter] = useState("all");
+
+  const viewTasks = useMemo(() => filterTasks(allTasks, view), [allTasks, view]);
 
   const filtered = useMemo(() => {
-    // First apply the page-level view filter (today, upcoming, etc.)
-    const byView = filterTasks(tasks, view);
-    // Then apply the secondary pill filter within that result
-    if (filter === "active") return byView.filter((t) => !t.done);
-    if (filter === "done")   return byView.filter((t) => t.done);
-    return byView;
-  }, [tasks, view, filter]);
+    if (filter === "active") return viewTasks.filter((t) => !t.done);
+    if (filter === "done")   return viewTasks.filter((t) => t.done);
+    if (LABEL_NAMES.has(filter)) return viewTasks.filter((t) => t.label === filter);
+    return viewTasks;
+  }, [viewTasks, filter]);
 
   const active = filtered.filter((t) => !t.done);
   const done   = filtered.filter((t) => t.done);
 
-  return { tasks, filtered, active, done, filter, setFilter };
+  return { allTasks, tasks: viewTasks, filtered, active, done, filter, setFilter };
 }

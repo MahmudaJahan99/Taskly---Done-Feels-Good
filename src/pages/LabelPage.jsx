@@ -7,7 +7,6 @@ const VALID_LABELS = new Set(LABEL_COLORS.map(l => l.name));
 
 export default function LabelPage() {
   const { label } = useParams();
-
   const { tasks, active, done, filter, setFilter } = useFilteredTasks(label);
 
   if (!VALID_LABELS.has(label)) {
@@ -19,7 +18,11 @@ export default function LabelPage() {
       title={label.charAt(0).toUpperCase() + label.slice(1)}
       tasks={tasks} active={active} done={done}
       filter={filter} setFilter={setFilter}
-      emptyMessage={`No ${label} tasks yet.`}
+      emptyMessage={
+        filter === "done"
+          ? `No ${label.charAt(0).toUpperCase() + label.slice(1)} tasks completed yet.`
+          : `No ${label.charAt(0).toUpperCase() + label.slice(1)} tasks yet.`
+      }
     />
   );
 }
