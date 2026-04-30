@@ -1,25 +1,26 @@
 import { useState } from "react";
 import useTaskStore from "../../store/taskStore";
 import { LABEL_COLORS } from "../../constants/labels";
+import { getTodayStr } from "../../utils/dates";
 
 export default function AddTaskForm() {
   const addTask = useTaskStore((s) => s.addTask);
 
-  // Calculate today's date in YYYY-MM-DD format for the date input's min attribute
-  const today = new Date();
-  const minDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-    .toISOString()
-    .split("T")[0];
-
   // Form state
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("work");
-  const [dueDate, setDueDate] = useState(minDate);
+  const [dueDate, setDueDate] = useState(getTodayStr());
 
   // Handle form submission
   function handleSubmit(e) {
     e.preventDefault();
     if (!title.trim()) return;
+
+    // Date validation
+    if (dueDate && dueDate < getTodayStr()) {
+      alert("Due date cannot be in the past.");
+      return;
+    }
 
     addTask({
       id: crypto.randomUUID(),
@@ -49,7 +50,7 @@ export default function AddTaskForm() {
       {/* Due date input */}
       <input
         type="date"
-        min={minDate}
+        min={getTodayStr()}
         aria-label="Due date (optional)"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { LABEL_COLORS } from '../../constants/labels'
 import useTaskStore from '../../store/taskStore'
+import { getTodayStr } from '../../utils/dates';
 
 // Returns { label, color } or null if no due date
 function formatDueDate(dueDate) {
@@ -35,14 +36,20 @@ export default function TaskItem({ task }) {
 
   // Save changes and exit edit mode
   function handleSave() {
+    if (draftDue && draftDue < getTodayStr()) {
+      alert("Due date cannot be in the past.");
+      return;
+    }
+
     if (draft.trim()) {
       editTask(task.id, {
         title: draft.trim(),
         label: draftLabel,
         dueDate: draftDue || null,
-      })
+      });
     }
-    setEditing(false)
+
+    setEditing(false);
   }
 
   // Handle Enter to save and Escape to cancel while editing
@@ -107,6 +114,7 @@ export default function TaskItem({ task }) {
               <input
                 type="date"
                 value={draftDue}
+                min={getTodayStr()}
                 onChange={(e) => setDraftDue(e.target.value)}
                 className="text-xs border rounded px-1"
               />
