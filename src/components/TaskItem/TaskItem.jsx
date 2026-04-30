@@ -9,8 +9,9 @@ function formatDueDate(dueDate) {
 
   // Calculate difference in days between today and due date
   const today = new Date();
+  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
   const due = new Date(dueDate + 'T00:00:00');
-  const diffDays = Math.round((due - today.setHours(0, 0, 0, 0)) / 86_400_000);
+  const diffDays = Math.round((due - startOfToday) / 86_400_000);
 
   // Determine label and color based on difference
   if (diffDays < 0) return { label: `${Math.abs(diffDays)}d overdue`, color: 'text-red-500' };

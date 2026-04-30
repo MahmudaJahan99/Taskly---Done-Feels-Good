@@ -32,7 +32,7 @@ export default function AddTaskForm() {
     });
 
     setTitle("");
-    setDueDate("");
+    setDueDate(getTodayStr());
   }
 
   return (
@@ -69,7 +69,7 @@ export default function AddTaskForm() {
       </select>
 
       {/* Add task button */}
-      <button className="btn primary-btn flex items-center gap-2">
+      <button type="submit" className="btn primary-btn flex items-center gap-2">
         <span>+</span>
         <span>Add task</span>
       </button>
