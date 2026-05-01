@@ -11,7 +11,7 @@ A clean and minimal fast task management app built with React. Organize tasks by
 
 ---
 
-![Taskly Preview](./src/assets/localhost_5173_png)
+![Taskly Preview](./src/assets/taskly-done-feels-good.netlify.app_.png)
 
 ## 🔗 Links
 
