@@ -2,9 +2,12 @@ import { useState } from "react";
 import useTaskStore from "../../store/taskStore";
 import { LABEL_COLORS } from "../../constants/labels";
 import { getTodayStr } from "../../utils/dates";
+import { useToast } from '../../context/ToastContext'
 
 export default function AddTaskForm() {
   const addTask = useTaskStore((s) => s.addTask);
+
+  const { showToast } = useToast()
 
   // Form state
   const [title, setTitle] = useState("");
@@ -18,7 +21,7 @@ export default function AddTaskForm() {
 
     // Date validation
     if (dueDate && dueDate < getTodayStr()) {
-      alert("Due date cannot be in the past.");
+      showToast({ message: 'Due date cannot be in the past.', type: 'error' })
       return;
     }
 
@@ -31,6 +34,7 @@ export default function AddTaskForm() {
       dueDate: dueDate || null,
     });
 
+    showToast({ message: `"${title.trim()}" added ✓`, type: 'success' })
     setTitle("");
     setDueDate(getTodayStr());
   }

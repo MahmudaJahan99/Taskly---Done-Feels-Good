@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { LABEL_COLORS } from '../../constants/labels'
 import useTaskStore from '../../store/taskStore'
 import { getTodayStr } from '../../utils/dates';
+import { useToast } from '../../context/ToastContext'
 
 // Returns { label, color } or null if no due date
 function formatDueDate(dueDate) {
@@ -26,6 +27,7 @@ export default function TaskItem({ task }) {
   const toggleTask = useTaskStore((s) => s.toggleDone)
   const deleteTask = useTaskStore((s) => s.deleteTask)
   const editTask = useTaskStore((s) => s.editTask)
+  const { showToast } = useToast()
 
   // Local state for editing
   const [editing, setEditing] = useState(false)
@@ -39,7 +41,7 @@ export default function TaskItem({ task }) {
   // Save changes and exit edit mode
   function handleSave() {
     if (draftDue && draftDue < getTodayStr()) {
-      alert("Due date cannot be in the past.");
+      showToast({ message: 'Due date cannot be in the past.', type: 'error' })
       return;
     }
 
@@ -49,9 +51,15 @@ export default function TaskItem({ task }) {
         label: draftLabel,
         dueDate: draftDue || null,
       });
+      showToast({ message: 'Task updated', type: 'info' })
     }
 
     setEditing(false);
+  }
+
+  function handleDelete() {
+    deleteTask(task.id)
+    showToast({ message: `"${task.title}" deleted`, type: 'error' })
   }
 
   // Handle Enter to save and Escape to cancel while editing
@@ -169,7 +177,7 @@ export default function TaskItem({ task }) {
         )}
 
         {/* Delete button */}
-        <button onClick={() => deleteTask(task.id)} className="btn delete-btn">
+        <button onClick={handleDelete} className="btn delete-btn">
           Delete
         </button>
       </div>
