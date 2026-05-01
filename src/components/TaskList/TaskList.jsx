@@ -1,4 +1,5 @@
 import TaskItem from '../TaskItem/TaskItem'
+import { AnimatePresence } from 'motion/react'
 
 export default function TaskList({ tasks }) {
   // If no tasks, show a message instead of an empty list
@@ -13,9 +14,11 @@ export default function TaskList({ tasks }) {
   // Render the list of tasks
   return (
     <ul className="flex flex-col gap-3">
-      {tasks.map(task => (
-        <TaskItem key={task.id} task={task} />
-      ))}
+      <AnimatePresence initial={false}>
+        {tasks.map(task => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </AnimatePresence>
     </ul>
   )
 }

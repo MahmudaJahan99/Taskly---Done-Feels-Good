@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'motion/react'
 import { LABEL_COLORS } from '../../constants/labels'
 import useTaskStore from '../../store/taskStore'
 import { getTodayStr } from '../../utils/dates';
@@ -69,7 +70,12 @@ export default function TaskItem({ task }) {
     ?? LABEL_COLORS[0]
 
   return (
-    <li
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -20, transition: { duration: 0.15 } }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
       className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-white"
       style={{ '--label-bg': labelColor.bg, '--label-text': labelColor.text }}
     >
@@ -125,9 +131,13 @@ export default function TaskItem({ task }) {
           // Display mode: show title, label, and due info
           <>
             {/* Task title */}
-            <span className={`text-sm transition-opacity ${task.done ? 'line-through opacity-50' : ''}`}>
+            <motion.span
+              animate={{ opacity: task.done ? 0.45 : 1 }}
+              transition={{ duration: 0.2 }}
+              className={`text-sm ${task.done ? 'line-through' : ''}`}
+            >
               {task.title}
-            </span>
+            </motion.span>
 
             <div className="flex items-center gap-2">
               {/* Label dropdown */}
@@ -163,6 +173,6 @@ export default function TaskItem({ task }) {
           Delete
         </button>
       </div>
-    </li>
+    </motion.li>
   )
 }
