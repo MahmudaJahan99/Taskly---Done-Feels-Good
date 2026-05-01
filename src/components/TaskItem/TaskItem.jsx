@@ -76,7 +76,7 @@ export default function TaskItem({ task }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -20, transition: { duration: 0.15 } }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
-      className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-white"
+      className="flex items-center gap-3 p-3 rounded-lg border border-(--color-border) bg-(--color-white)"
       style={{ '--label-bg': labelColor.bg, '--label-text': labelColor.text }}
     >
 

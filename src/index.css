@@ -2,9 +2,9 @@
 @import "tailwindcss";
 
 :root {
+    --color-bg: #FDF6EE;
     --color-primary: #D97B4F;
     --color-surface: #F5E6D3;
-    --color-bg: #FDF6EE;
     --color-border: #E8D5BF;
     --color-text: #3D2B1F;
     --color-muted: #A07858;
@@ -13,6 +13,15 @@
 
     --font-body: "Lato", sans-serif;
     --font-display: "Playfair Display", serif;
+}
+
+.dark {
+    --color-bg: #1C1612;
+    --color-surface: #26201A;
+    --color-border: #3A3028;
+    --color-text: #F0E6DA;
+    --color-muted: #8C7B6E;
+    --color-white: #2E2620;
 }
 
 body {

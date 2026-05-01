@@ -5,6 +5,14 @@ const useTaskStore = create(
   persist(
     (set) => ({
       tasks: [],
+      darkMode: false,
+
+      toggleDarkMode: () =>
+        set((state) => {
+          const next = !state.darkMode;
+          document.documentElement.classList.toggle('dark', next);
+          return { darkMode: next };
+        }),
 
       toggleDone: (id) =>
         set((state) => ({
@@ -31,7 +39,13 @@ const useTaskStore = create(
     
     {
       name: "taskly-storage",
-      partialize: (state) => ({ tasks: state.tasks }),
+      partialize: (state) => ({ tasks: state.tasks, darkMode: state.darkMode }),
+
+      onRehydrateStorage: () => (state) => {
+        if (state?.darkMode) {
+          document.documentElement.classList.add('dark');
+        }
+      },
     }
   )
 );

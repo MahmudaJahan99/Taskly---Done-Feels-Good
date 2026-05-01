@@ -7,6 +7,7 @@ import { CiCalendar } from "react-icons/ci";
 import useTaskStore from '../../store/taskStore';
 import { LABEL_COLORS } from '../../constants/labels';
 import { getCounts } from '../../utils/taskFilters';
+import DarkModeToggle from '../ui/DarkModeToggle'
 
 export default function Sidebar() {
   const tasks = useTaskStore(state => state.tasks)
@@ -77,6 +78,14 @@ export default function Sidebar() {
           </span>
         </NavLink>
       ))}
+
+      {/* Dark mode toggle — pinned to the bottom */}
+      <div className='mt-auto pt-4 flex items-center gap-2 px-2.5'>
+        <DarkModeToggle />
+        <span className='text-xs' style={{ color: 'var(--color-muted)' }}>
+          Dark mode
+        </span>
+      </div>
     </aside>
   )
 }
