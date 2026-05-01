@@ -6,6 +6,7 @@ import TodayTasks from './pages/TodayTasks.jsx'
 import UpcomingTasks from './pages/UpcomingTasks.jsx'
 import CompletedTasks from './pages/CompletedTasks.jsx'
 import LabelPage from './pages/LabelPage.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
   return (
@@ -17,6 +18,8 @@ export default function App() {
         <Route path="done" element={<CompletedTasks />} />
         <Route path="/:label" element={<LabelPage />} />
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
