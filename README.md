@@ -23,9 +23,13 @@ A clean and minimal fast task management app built with React. Organize tasks by
 ## Features
 
 - **Add, edit, and delete tasks** with a title, due date, and label
+- **Undo delete** — a 5-second window to recover a deleted task
 - **Label-based organization** — Work, Health, Personal, Study, Other — each with its own page
 - **Smart due date indicators** — shows "Due today", "Due tomorrow", "3d overdue", etc.
 - **Filter pills** on every page to quickly switch between All, Active, and Done tasks
+- **Dark mode** — persisted across sessions
+- **Toast notifications** — contextual feedback for every action
+- **Animated task list** — smooth enter/exit transitions
 - **Today view** — tasks due today that aren't completed yet
 - **Upcoming view** — future tasks sorted by what's coming next
 - **Completed view** — a dedicated archive of everything you've finished
@@ -37,14 +41,16 @@ A clean and minimal fast task management app built with React. Organize tasks by
 
 ## Tech Stack
 
-| Concern | Library |
+| Tool | Purpose |
 |---|---|
-| UI | React 19 |
-| Routing | React Router v7 |
-| State management | Zustand |
-| Styling | Tailwind CSS v4 |
+| React 19 | UI |
+| React Router v7 | Routing |
+| Zustand | Global state + localStorage persistence |
+| Animations | Motion (Framer Motion) |
+| Tailwind CSS v4 | Styling |
 | Build tool | Vite |
-| Icons | React Icons |
+| React Icons | Icons |
+| Vite | Build tool |
 
 ---
 
