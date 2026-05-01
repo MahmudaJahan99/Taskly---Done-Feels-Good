@@ -46,6 +46,7 @@ export default function TaskItem({ task }) {
       return;
     }
 
+    // Only save if title is not empty after trimming
     if (draft.trim()) {
       editTask(task.id, {
         title: draft.trim(),
@@ -58,13 +59,14 @@ export default function TaskItem({ task }) {
     setEditing(false);
   }
 
+  // Delete task and show undo toast
   function handleDelete() {
     deleteTask(task.id)
     
     showToast({
       message: `"${task.title}" deleted`,
       type: 'error',
-      duration: 5000,                        // match the commit timer
+      duration: 5000,
       action: {
         label: 'Undo',
         onClick: () => undoDelete(task.id),
@@ -88,6 +90,7 @@ export default function TaskItem({ task }) {
     ?? LABEL_COLORS[0]
 
   return (
+    // Animate presence with fade and slide effects
     <motion.li
       layout
       initial={{ opacity: 0, y: -8 }}

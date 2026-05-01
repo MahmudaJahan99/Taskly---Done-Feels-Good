@@ -9,11 +9,13 @@ export default function LabelPage() {
   const { label } = useParams();
   const { tasks, active, done, filter, setFilter } = useFilteredTasks(label);
 
+  // Redirect to home if the label is invalid
   if (!VALID_LABELS.has(label)) {
     return <Navigate to="/" replace />;
   }
 
   return (
+    // Capitalize the first letter of the label for the title and empty messages
     <TaskPage
       title={label.charAt(0).toUpperCase() + label.slice(1)}
       tasks={tasks} active={active} done={done}

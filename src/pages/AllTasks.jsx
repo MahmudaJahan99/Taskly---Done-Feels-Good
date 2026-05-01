@@ -1,4 +1,3 @@
-// src/pages/AllTasks.jsx
 import { LABEL_COLORS } from '../constants/labels';
 import { useFilteredTasks } from '../hooks/useFilteredTasks';
 import TaskPage from '../components/TaskPage/TaskPage';

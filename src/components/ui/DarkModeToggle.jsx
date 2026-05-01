@@ -6,6 +6,7 @@ export default function DarkModeToggle() {
   const toggleDarkMode = useTaskStore((s) => s.toggleDarkMode)
 
   return (
+    // Theme Button
     <button
       onClick={toggleDarkMode}
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}

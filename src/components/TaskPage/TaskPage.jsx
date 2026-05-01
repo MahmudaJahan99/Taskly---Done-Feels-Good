@@ -15,7 +15,7 @@ export default function TaskPage({
   setFilter,
   showAddForm = true,
   showFilters = true,
-  extraFilters = [], // e.g. label names for AllTasks
+  extraFilters = [],
   emptyMessage = "No tasks here yet.",
 }) {
   const filters = showFilters ? [...BASE_FILTERS, ...extraFilters] : [];
@@ -24,10 +24,12 @@ export default function TaskPage({
 
   return (
     <section>
+      {/* Page Title */}
       <div className="border-b pb-4 border-(--color-border)">
         <h1>{title}</h1>
       </div>
 
+      {/* Stat cards */}
       <div className="grid md:grid-cols-3 gap-2 my-3">
         <div className="primary-card">
           <span className="text-(--color-muted) text-sm">Total</span>
@@ -43,10 +45,14 @@ export default function TaskPage({
         </div>
       </div>
 
+      {/* Add Task form */}
       {showAddForm && <AddTaskForm />}
+      {/* Progress Bar */}
       <ProgressBar total={stats.length} done={statDone} />
+      {/* Filter Buttons */}
       {showFilters && <FilterBar filters={filters} filter={filter} setFilter={setFilter} />}
 
+      {/* Active Tasks */}
       {active.length > 0 && (
         <div className="mb-5">
           <p className="uppercase tracking-[0.08em] mb-2 text-sm text-(--color-muted)">Active</p>
@@ -54,6 +60,7 @@ export default function TaskPage({
         </div>
       )}
 
+      {/* Done Tasks */}
       {done.length > 0 && (
         <div>
           <p className="uppercase tracking-[0.08em] mb-2 text-sm text-(--color-muted)">Completed</p>
@@ -61,6 +68,7 @@ export default function TaskPage({
         </div>
       )}
 
+      {/* If Tasks are empty then Message */}
       {active.length === 0 && done.length === 0 && (
         <p className="text-center py-8 text-sm text-(--color-muted)">{emptyMessage}</p>
       )}

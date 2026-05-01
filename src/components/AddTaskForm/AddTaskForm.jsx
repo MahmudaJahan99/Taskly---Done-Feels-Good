@@ -25,6 +25,7 @@ export default function AddTaskForm() {
       return;
     }
 
+    // Add the new task to the store
     addTask({
       id: crypto.randomUUID(),
       title: title.trim(),
@@ -34,7 +35,10 @@ export default function AddTaskForm() {
       dueDate: dueDate || null,
     });
 
+    // Show success toast
     showToast({ message: `"${title.trim()}" added ✓`, type: 'success' })
+
+    // Reset form
     setTitle("");
     setDueDate(getTodayStr());
   }

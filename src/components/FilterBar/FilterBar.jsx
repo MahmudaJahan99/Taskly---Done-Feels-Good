@@ -1,4 +1,4 @@
-const FilterBar = ({ filters, filter, setFilter }) => {
+export default function FilterBar({ filters, filter, setFilter }) {
   return (
     <div className="flex gap-2 flex-wrap my-4">
       {filters.map((label) => (
@@ -18,5 +18,3 @@ const FilterBar = ({ filters, filter, setFilter }) => {
     </div>
   );
 };
-
-export default FilterBar;
