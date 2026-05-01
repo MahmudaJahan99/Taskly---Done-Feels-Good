@@ -25,7 +25,8 @@ function formatDueDate(dueDate) {
 export default function TaskItem({ task }) {
   // Get actions from the store
   const toggleTask = useTaskStore((s) => s.toggleDone)
-  const deleteTask = useTaskStore((s) => s.deleteTask)
+  const deleteTask  = useTaskStore((s) => s.deleteTask)
+  const undoDelete  = useTaskStore((s) => s.undoDelete)
   const editTask = useTaskStore((s) => s.editTask)
   const { showToast } = useToast()
 
@@ -59,7 +60,16 @@ export default function TaskItem({ task }) {
 
   function handleDelete() {
     deleteTask(task.id)
-    showToast({ message: `"${task.title}" deleted`, type: 'error' })
+    
+    showToast({
+      message: `"${task.title}" deleted`,
+      type: 'error',
+      duration: 5000,                        // match the commit timer
+      action: {
+        label: 'Undo',
+        onClick: () => undoDelete(task.id),
+      },
+    })
   }
 
   // Handle Enter to save and Escape to cancel while editing

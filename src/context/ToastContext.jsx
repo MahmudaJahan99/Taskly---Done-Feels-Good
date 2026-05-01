@@ -21,10 +21,10 @@ export function ToastProvider({ children }) {
   const [toasts, dispatch] = useReducer(toastReducer, [])
 
   // Stable reference with useCallback — safe to use in useEffect deps
-  const showToast = useCallback(({ message, type = 'success', duration = 3000 }) => {
+  const showToast = useCallback(({ message, type = 'success', duration = 3000, action }) => {
     const id = crypto.randomUUID()
 
-    dispatch({ type: 'ADD', toast: { id, message, type } })
+    dispatch({ type: 'ADD', toast: { id, message, type, action } })
 
     // Auto-dismiss after duration
     setTimeout(() => {
@@ -102,6 +102,11 @@ function Toast({ toast }) {
   const { removeToast } = useContext(ToastContext)
   const style = STYLES[toast.type] ?? STYLES.info
 
+  function handleAction() {
+    toast.action?.onClick()   // run the undo (or any future action)
+    removeToast(toast.id)     // dismiss immediately after acting
+  }
+
   return (
     <div
       role="alert"
@@ -137,6 +142,27 @@ function Toast({ toast }) {
 
       {/* Message */}
       <span style={{ flex: 1 }}>{toast.message}</span>
+
+      {/* ── Action button (Undo) ── */}
+      {toast.action && (
+        <button
+          onClick={handleAction}
+          style={{
+            background: 'rgba(255,255,255,0.2)',
+            border: '1px solid rgba(255,255,255,0.35)',
+            color: 'inherit',
+            borderRadius: '6px',
+            padding: '3px 10px',
+            fontSize: '12px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            fontFamily: 'var(--font-sans)',
+            flexShrink: 0,
+          }}
+        >
+          {toast.action.label}
+        </button>
+      )}
 
       {/* Dismiss button */}
       <button
