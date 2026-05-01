@@ -5,6 +5,11 @@ export default function Today() {
   const { tasks, active, done, filter, setFilter } = useFilteredTasks("today");
   return (
     <TaskPage title="Today" tasks={tasks} active={active} done={done}
-      filter={filter} setFilter={setFilter} emptyMessage="Nothing due today. Enjoy!" />
+      filter={filter} setFilter={setFilter}
+      emptyMessage={
+        filter === "done"
+          ? `No tasks completed yet.`
+          : `No tasks yet.`
+      } />
   );
 }
