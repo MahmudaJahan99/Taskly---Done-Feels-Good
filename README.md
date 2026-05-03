@@ -54,79 +54,10 @@ A clean and minimal fast task management app built with React. Organize tasks by
 
 ---
 
-## Getting Started
 
-### Prerequisites
+## 👩‍💻 Author
 
-- Node.js 18+
-- npm or yarn
-
-### Installation
-
-```bash
-# Clone the repo
-git clone https://github.com/your-username/taskly.git
-cd taskly
-
-# Install dependencies
-npm install
-
-# Start the dev server
-npm run dev
-```
-
-The app will be available at `http://localhost:5173`.
-
-### Build for production
-
-```bash
-npm run build
-```
-
-Output goes to the `dist/` folder, ready to deploy to any static host (Vercel, Netlify, GitHub Pages, etc.).
-
----
-
-## How It Works
-
-### State
-
-All task data lives in a single Zustand store and is persisted to `localStorage` under the key `taskly-storage`. Each task has the following shape:
-
-```js
-{
-  id: "uuid",
-  title: "Buy groceries",
-  label: "personal",       // work | health | personal | study | other
-  done: false,
-  createdAt: "2025-01-01T00:00:00.000Z",
-  dueDate: "2025-01-15"    // YYYY-MM-DD, or null
-}
-```
-
-### Filtering
-
-Filtering works in two layers:
-
-1. **View filter** — determined by the current route (`/today`, `/upcoming`, `/work`, etc.) and applied in `filterTasks()`
-2. **Pill filter** — a secondary filter (All / Active / Done / label name) applied on top of the view result inside `useFilteredTasks()`
-
-The All Tasks page intentionally keeps its three stat cards (Total / Active / Done) pinned to global counts — pill selection only affects the task list and progress bar below.
-
-### Labels
-
-Labels are defined in `src/constants/labels.js` as an array of `{ name, bg, text }` objects. Adding a new label there automatically adds it to the sidebar, the add/edit form dropdowns, the filter pills on All Tasks, and creates a valid route via `LabelPage`.
-
----
-
-## Available Scripts
-
-| Script | Description |
-|---|---|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint |
+Mahmuda Jahan. Built as Project of a React 19 learning journey.
 
 ---
 
